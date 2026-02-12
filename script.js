@@ -287,3 +287,14 @@ function sendToWhatsApp() {
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
     window.open(whatsappUrl, '_blank');
 }
+
+function toggleSign(inputId) {
+    const input = document.getElementById(inputId);
+    let value = input.value.trim();
+
+    if (value.startsWith('-')) {
+        input.value = value.substring(1);
+    } else {
+        input.value = '-' + value;
+    }
+}
