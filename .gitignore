@@ -3,6 +3,3 @@ node_modules/
 dist/
 .env
 .vscode/
-index.html
-script.js
-style.css
