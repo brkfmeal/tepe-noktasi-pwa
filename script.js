@@ -2,6 +2,7 @@ let quiz = {
     currentQuestion: null,
     questionNumber: 0,
     totalAnswered: 0, // TOP
+    totalCorrect: 0, // Toplam Doğru Sayısı
     last5Results: [], // Son 5 sorunun sonuçları (true/false)
     correctInLast5: 0 // DY
 };
@@ -96,6 +97,7 @@ function checkAndShowAnswer() {
     let feedback = '<div class="feedback" style="background: ';
 
     if (allCorrect) {
+        quiz.totalCorrect++;
         feedback += '#d4edda; color: #155724;">✓ Mükemmel! Tüm cevaplar doğru. <strong>+1 Puan</strong></div>';
     } else {
         feedback += '#f8d7da; color: #721c24;">✗ Bazı cevaplar yanlış. <strong>0 Puan</strong></div>';
@@ -189,7 +191,7 @@ function goBackToQuestions() {
         document.getElementById('sendButtonSection').classList.remove('hidden');
     }
 
-    // Şifre görünümünü gizle
+    // Kod görünümünü gizle
     document.getElementById('passwordDisplay').classList.remove('show');
 
     // Formu temizle
@@ -202,21 +204,21 @@ function goBackToQuestions() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function generatePassword() {
+function generateCode() {
     // Minimum 5 soru kontrolü
     if (quiz.totalAnswered < 5) {
         alert('En az 5 soru çözmelisiniz!');
         return;
     }
 
-    const studentNumber = parseInt(document.getElementById('studentNumber').value);
+    const studentNumberStr = document.getElementById('studentNumber').value.trim();
     const studentName = document.getElementById('studentName').value.trim();
     const studentSurname = document.getElementById('studentSurname').value.trim();
     const studentClass = document.getElementById('studentClass').value;
     const studentSection = document.getElementById('studentSection').value.trim().toUpperCase();
 
     // Validasyon
-    if (!studentNumber || isNaN(studentNumber)) {
+    if (!studentNumberStr || isNaN(studentNumberStr)) {
         alert('Lütfen geçerli bir okul numarası girin (sadece rakam).');
         return;
     }
@@ -236,16 +238,21 @@ function generatePassword() {
         return;
     }
 
-    // ŞİFRE = öğrenci numarası * (öğrenci numarası + DY*100 + TOP)
-    const DY = quiz.correctInLast5;
-    const TOP = quiz.totalAnswered;
-    const password = studentNumber * (studentNumber + DY * 100 + TOP);
+    // KOD = Öğrenci numarasının rakamları toplamı + (Toplam Doğru Sayısı * 11)
+    let sumOfDigits = 0;
+    for (let char of studentNumberStr) {
+        if (!isNaN(parseInt(char))) {
+            sumOfDigits += parseInt(char);
+        }
+    }
 
-    // Şifreyi göster
-    document.getElementById('passwordValue').textContent = password;
+    const code = sumOfDigits + (quiz.totalCorrect * 11);
+
+    // Kodu göster
+    document.getElementById('passwordValue').textContent = code;
     document.getElementById('passwordDisplay').classList.add('show');
 
-    // Ekranı şifre bölümüne kaydır
+    // Ekranı kod bölümüne kaydır
     setTimeout(() => {
         window.scrollTo({
             top: document.getElementById('passwordDisplay').offsetTop - 100,
@@ -255,38 +262,23 @@ function generatePassword() {
 }
 
 function copyPassword() {
-    const password = document.getElementById('passwordValue').textContent;
+    const code = document.getElementById('passwordValue').textContent;
 
     // Kopyalama işlemi
-    navigator.clipboard.writeText(password).then(() => {
-        alert('Şifre kopyalandı! Artık Google Form\'a yapıştırabilirsiniz.');
+    navigator.clipboard.writeText(code).then(() => {
+        alert('Kod kopyalandı!');
     }).catch(() => {
         // Eski tarayıcılar için alternatif
         const textarea = document.createElement('textarea');
-        textarea.value = password;
+        textarea.value = code;
         document.body.appendChild(textarea);
         textarea.select();
         document.execCommand('copy');
         document.body.removeChild(textarea);
-        alert('Şifre kopyalandı! Artık Google Form\'a yapıştırabilirsiniz.');
+        alert('Kod kopyalandı!');
     });
 }
 
-function sendToWhatsApp() {
-    const studentNumber = document.getElementById('studentNumber').value;
-    const studentName = document.getElementById('studentName').value.trim();
-    const studentSurname = document.getElementById('studentSurname').value.trim();
-    const studentClass = document.getElementById('studentClass').value;
-    const studentSection = document.getElementById('studentSection').value.trim().toUpperCase();
-    const password = document.getElementById('passwordValue').textContent;
-
-    const message = `${studentNumber} ${studentName} ${studentSurname} ${studentClass} ${studentSection} ${password}`;
-    const phoneNumber = "+905070343973";
-    const encodedMessage = encodeURIComponent(message);
-
-    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
-    window.open(whatsappUrl, '_blank');
-}
 
 function toggleSign(inputId) {
     const input = document.getElementById(inputId);

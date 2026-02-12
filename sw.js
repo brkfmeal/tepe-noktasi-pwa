@@ -1,4 +1,4 @@
-const CACHE_NAME = 'tepe-noktasi-v2';
+const CACHE_NAME = 'genel-tepe-noktasi-v1';
 const ASSETS = [
     './',
     './index.html',
