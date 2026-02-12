@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tepe Noktası Formu - 5 Soru Pratik</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#667eea">
+    <link rel="apple-touch-icon" href="icon.png">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Tepe Noktası Formu - 5 Soru Pratik</h1>
+
+        <!-- Lamba Sistemi -->
+        <div class="lamp-container" id="lampContainer">
+            <div class="lamp"></div>
+            <div class="lamp"></div>
+            <div class="lamp"></div>
+            <div class="lamp"></div>
+            <div class="lamp"></div>
+        </div>
+
+        <div class="score-display" id="scoreDisplay">
+            Başlamak için "BAŞLA" butonuna tıklayın
+        </div>
+
+        <!-- Başla Butonu -->
+        <div id="startSection" class="button-group">
+            <button class="btn btn-success" onclick="startQuiz()"
+                style="font-size: 20px; padding: 15px 40px;">BAŞLA</button>
+        </div>
+
+        <!-- Soru Bölümü -->
+        <div id="questionSection" class="hidden">
+            <div class="section">
+                <h2 style="color: #667eea; margin-bottom: 15px;">Soru</h2>
+                <div class="function-display" id="originalFunction">
+                    f(x) = ax<span class="sup">2</span> + bx + c
+                </div>
+            </div>
+
+            <!-- Tepe Noktası Formu Bölümü -->
+            <div class="section">
+                <h2 style="color: #667eea; margin-bottom: 15px;">Tepe Noktası Formu</h2>
+                <div class="function-display">
+                    f(x) = a(x + r)<span class="sup">2</span> + k
+                </div>
+
+                <div class="input-group">
+                    <label>a =</label>
+                    <input type="text" id="inputA" placeholder="a değerini girin" inputmode="decimal">
+                </div>
+                <div class="input-group">
+                    <label>r =</label>
+                    <input type="text" id="inputR" placeholder="r değerini girin" inputmode="decimal">
+                </div>
+                <div class="input-group">
+                    <label>k =</label>
+                    <input type="text" id="inputK" placeholder="k değerini girin" inputmode="decimal">
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-success" id="checkButton" onclick="checkAndShowAnswer()">Kontrol Et ve
+                        Göster</button>
+                </div>
+
+                <div id="feedback"></div>
+
+                <div class="answer-box" id="answerBox">
+                    <h3 style="color: #667eea; margin-bottom: 10px;">Doğru Cevap:</h3>
+                    <div id="answerContent"></div>
+                    <button class="btn btn-primary" onclick="nextQuestion()">SIRADAKİ SORU</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gönder Bölümü -->
+        <div id="submitSection" class="submit-section">
+            <h2 style="color: #667eea; margin-bottom: 20px; text-align: center;">Bilgilerinizi Girin</h2>
+
+            <div style="margin-bottom: 20px;">
+                <button class="btn" onclick="goBackToQuestions()" style="background: #6c757d;">← GERİ</button>
+            </div>
+
+            <div class="form-group">
+                <label>Okul Numarası (Sadece rakam):</label>
+                <input type="number" id="studentNumber" placeholder="Örn: 12345">
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Ad:</label>
+                    <input type="text" id="studentName" placeholder="Adınız" pattern="[A-Za-zçÇğĞıİöÖşŞüÜ\s]+">
+                </div>
+                <div class="form-group">
+                    <label>Soyad:</label>
+                    <input type="text" id="studentSurname" placeholder="Soyadınız" pattern="[A-Za-zçÇğĞıİöÖşŞüÜ\s]+">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Sınıf:</label>
+                    <input type="number" id="studentClass" placeholder="Örn: 9" min="1" max="12">
+                </div>
+                <div class="form-group">
+                    <label>Şube:</label>
+                    <input type="text" id="studentSection" placeholder="Örn: A" maxlength="1" pattern="[A-Za-z]">
+                </div>
+            </div>
+
+            <button class="btn btn-primary" onclick="generatePassword()">ŞİFREMİ OLUŞTUR</button>
+
+            <div id="passwordDisplay" class="password-display">
+                <h3 style="color: #155724; margin-bottom: 10px;">ŞİFRENİZ:</h3>
+                <div class="password-value" id="passwordValue">123456789</div>
+                <button class="btn btn-success" onclick="copyPassword()">Bu Sayıyı Kopyala</button>
+                <button class="btn btn-whatsapp" onclick="sendToWhatsApp()">WhatsApp ile Gönder</button>
+
+                <div class="warning-text">
+                    <strong>⚠️ ÖNEMLİ:</strong> Bu şifreyi mutlaka kaydedin! Google Form'da ihtiyacınız olacak.
+                </div>
+
+                <div class="link-box">
+                    <p style="margin-bottom: 15px; font-weight: 600; font-size: 16px;">Şifrenizi kopyaladıktan sonra
+                        formu doldurmak için:</p>
+                    <a href="https://forms.gle/VdFmBE7FN1Z2PUFx7" target="_blank" class="btn btn-primary"
+                        style="display: inline-block; text-decoration: none; font-size: 18px;">
+                        FORM İÇİN TIKLAYINIZ
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gönder Butonu (En Altta) -->
+        <div id="sendButtonSection" class="hidden" style="margin-top: 30px;">
+            <button class="btn" onclick="showSubmitSection()"
+                style="width: 100%; font-size: 20px; padding: 15px; background: #ffc107; color: #000;">
+                GÖNDER
+            </button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(registration => {
+                        console.log('Service Worker registered with scope:', registration.scope);
+                    })
+                    .catch(error => {
+                        console.log('Service Worker registration failed:', error);
+                    });
+            });
+        }
+    </script>
+</body>
+
+</html>
