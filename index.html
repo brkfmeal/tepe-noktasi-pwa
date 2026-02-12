@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Genel Tepe Noktası - 5 Soru Pratik</title>
+    <title>Tepe Noktası Formu - 5 Soru Pratik</title>
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#667eea">
@@ -14,7 +14,7 @@
 
 <body>
     <div class="container">
-        <h1>Genel Tepe Noktası - 5 Soru Pratik</h1>
+        <h1>Tepe Noktası Formu - 5 Soru Pratik</h1>
 
         <!-- Lamba Sistemi -->
         <div class="lamp-container" id="lampContainer">
@@ -117,15 +117,25 @@
                 </div>
             </div>
 
-            <button class="btn btn-primary" onclick="generateCode()">KODUMU OLUŞTUR</button>
+            <button class="btn btn-primary" onclick="generatePassword()">ŞİFREMİ OLUŞTUR</button>
 
             <div id="passwordDisplay" class="password-display">
-                <h3 style="color: #155724; margin-bottom: 10px;">KODUNUZ:</h3>
+                <h3 style="color: #155724; margin-bottom: 10px;">ŞİFRENİZ:</h3>
                 <div class="password-value" id="passwordValue">123456789</div>
                 <button class="btn btn-success" onclick="copyPassword()">Bu Sayıyı Kopyala</button>
+                <button class="btn btn-whatsapp" onclick="sendToWhatsApp()">WhatsApp ile Gönder</button>
 
                 <div class="warning-text">
-                    <strong>⚠️ ÖNEMLİ:</strong> Bu kodu mutlaka kaydedin!
+                    <strong>⚠️ ÖNEMLİ:</strong> Bu şifreyi mutlaka kaydedin! Google Form'da ihtiyacınız olacak.
+                </div>
+
+                <div class="link-box">
+                    <p style="margin-bottom: 15px; font-weight: 600; font-size: 16px;">Şifrenizi kopyaladıktan sonra
+                        formu doldurmak için:</p>
+                    <a href="https://forms.gle/VdFmBE7FN1Z2PUFx7" target="_blank" class="btn btn-primary"
+                        style="display: inline-block; text-decoration: none; font-size: 18px;">
+                        FORM İÇİN TIKLAYINIZ
+                    </a>
                 </div>
             </div>
         </div>

@@ -1,6 +1,6 @@
 {
-    "name": "Genel Tepe Noktası - 5 Soru Pratik",
-    "short_name": "Genel TN",
+    "name": "Tepe Noktası Formu - 5 Soru Pratik",
+    "short_name": "Tepe Noktası",
     "description": "2. Dereceden Fonksiyonlar Tepe Noktası Formu Pratiği",
     "start_url": "./index.html",
     "display": "standalone",
